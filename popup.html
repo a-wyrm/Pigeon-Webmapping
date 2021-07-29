@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <p><a href="#">test 1</a></p>
+  <div class="middle">
+    <div class="img"><img src="http://placehold.it/64/64"/></div>
+    <p>test 1</p>
+  </div>
+</div>
+  
+</body>
+</html>
