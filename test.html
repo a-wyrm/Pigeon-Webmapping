@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <script src="BST.js"></script>
+    <script>
+      tree = new BST();
+      vGap = 40;
+      radius = 20;
+
+      function draw() {
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext("2d");
+
+        // Reset size will clear the canvas, but not for IE9
+        canvas.width = window.innerWidth - 20;
+        canvas.height = 230; // window.innerHeight - 180;
+        context.clearRect(0, 0, canvas.width, canvas.height); // For IE 9
+
+
+
+        x = canvas.width / 2;
+        y = 30;
+
+        drawTree(context, x, y, radius, tree.root, canvas.width / 4);
+
+        context.stroke();
+      }
+
+      function drawTree(context, x, y, radius, root, hGap) {
+        context.fillText(root.element + "", x - 5, y + 5);
+        context.arc(x, y, radius, 0, Math.PI * 2, false);
+
+        if (root.left != null) {
+          connectTwoCircles(context, x, y, x - hGap, y + vGap);
+          context.moveTo(x - hGap + radius, y + vGap);
+          drawTree(context, x - hGap, y + vGap, radius, root.left, hGap / 2);
+        }
+
+        if (root.right != null) {
+          connectTwoCircles(context, x, y, x + hGap, y + vGap);
+          context.moveTo(x + hGap + radius, y + vGap);
+          drawTree(context, x + hGap, y + vGap, radius, root.right, hGap / 2);
+        }
+      }
+
+      // Connect two circles centered at (x1, y1) and (x2, y2) 
+      function connectTwoCircles(context, x1, y1, x2, y2) {
+        var d = Math.sqrt(vGap * vGap + (x2 - x1) * (x2 - x1));
+        var x11 = x1 - radius * (x1 - x2) / d;
+        var y11 = y1 - radius * (y1 - y2) / d;
+        var x21 = x2 + radius * (x1 - x2) / d;
+        var y21 = y2 + radius * (y1 - y2) / d;
+        context.moveTo(x11, y11);
+        context.lineTo(x21, y21);
+      }
+
+      function insert() {
+        var value = document.getElementById('value').value;
+        if (value == "") {
+          alert("no key entered");
+        }
+        else if (tree.search(parseInt(value))) {
+          alert("Element in tree already.");
+        }
+        else {
+          tree.insert(parseInt(value));
+          draw();
+        }
+      }
+
+    </script>
+    <body onload="draw()" onresize="draw()">
+        <div style="margin: 0px auto; border: 1px solid #EB0D1B; text-align: right">
+          <canvas id="canvas" width="200" height="300"></canvas>
+        </div>
+        <div style="text-align: center; margin-top: 1em">
+            <p><a href="https://www.google.com/" id="name" onmouseover = "insert()">Redirect to Google</a></p>
+            <input value="1" id="value" type="hidden"> 
+    
+          <span style="padding: 3px">
+          </span>     
+        </div>
+    </body>
+      
+</html>
